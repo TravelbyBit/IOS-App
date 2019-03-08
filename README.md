@@ -10,4 +10,4 @@ This repo will be for a TravelByBit Native iOS app to list local merchants.
 
 ## API
 
-`http://travelbybit-merchantlitsts.us-east-2.elasticbeanstalk.com/merchantLists`
+```https://tbb-merchant-api.firebaseapp.com/```
