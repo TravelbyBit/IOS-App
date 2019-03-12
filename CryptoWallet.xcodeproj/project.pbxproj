@@ -19,6 +19,10 @@
 		0129B78A2231EE7200DE15E3 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129B7892231EE7200DE15E3 /* SettingsController.swift */; };
 		0129B78D2231F2E400DE15E3 /* MerchantListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129B78C2231F2E400DE15E3 /* MerchantListHeader.swift */; };
 		0129B78F22320B7000DE15E3 /* MerchantTableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129B78E22320B7000DE15E3 /* MerchantTableData.swift */; };
+		019F1ED22234B57000C6E098 /* PublicArt.json in Resources */ = {isa = PBXBuildFile; fileRef = 019F1ED12234B57000C6E098 /* PublicArt.json */; };
+		019F1ED42234B66600C6E098 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F1ED32234B66600C6E098 /* MapViewController.swift */; };
+		019F1ED62234C07C00C6E098 /* Merchant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F1ED52234C07C00C6E098 /* Merchant.swift */; };
+		019F1EFF2237582300C6E098 /* MerchantDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F1EFE2237582300C6E098 /* MerchantDetailController.swift */; };
 		7430290538E77D5061B10DDE /* Pods_CryptoWallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60B80272C6F56E92116598A5 /* Pods_CryptoWallet.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +41,10 @@
 		0129B7892231EE7200DE15E3 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		0129B78C2231F2E400DE15E3 /* MerchantListHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantListHeader.swift; sourceTree = "<group>"; };
 		0129B78E22320B7000DE15E3 /* MerchantTableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantTableData.swift; sourceTree = "<group>"; };
+		019F1ED12234B57000C6E098 /* PublicArt.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PublicArt.json; sourceTree = "<group>"; };
+		019F1ED32234B66600C6E098 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		019F1ED52234C07C00C6E098 /* Merchant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Merchant.swift; sourceTree = "<group>"; };
+		019F1EFE2237582300C6E098 /* MerchantDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantDetailController.swift; sourceTree = "<group>"; };
 		5B5A80DE3F9A1ED3F3ADE7A4 /* Pods-CryptoWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoWallet.release.xcconfig"; path = "Target Support Files/Pods-CryptoWallet/Pods-CryptoWallet.release.xcconfig"; sourceTree = "<group>"; };
 		60B80272C6F56E92116598A5 /* Pods_CryptoWallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoWallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8B04409D7D18496BD547B47 /* Pods-CryptoWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoWallet.debug.xcconfig"; path = "Target Support Files/Pods-CryptoWallet/Pods-CryptoWallet.debug.xcconfig"; sourceTree = "<group>"; };
@@ -77,12 +85,14 @@
 			children = (
 				0129B76B2231E72600DE15E3 /* AppDelegate.swift */,
 				0129B78B2231EE7D00DE15E3 /* ViewControllers */,
-				0129B7852231EE0D00DE15E3 /* extensions.swift */,
+				019F1ED722367A5100C6E098 /* Model */,
 				0129B77D2231E77800DE15E3 /* MainTabBarController.swift */,
 				0129B76F2231E72600DE15E3 /* Main.storyboard */,
+				019F1ED12234B57000C6E098 /* PublicArt.json */,
 				0129B7722231E72700DE15E3 /* Assets.xcassets */,
 				0129B7742231E72700DE15E3 /* LaunchScreen.storyboard */,
 				0129B7772231E72700DE15E3 /* Info.plist */,
+				0129B7852231EE0D00DE15E3 /* extensions.swift */,
 			);
 			path = CryptoWallet;
 			sourceTree = "<group>";
@@ -92,12 +102,22 @@
 			children = (
 				0129B76D2231E72600DE15E3 /* MerchantListController.swift */,
 				0129B7832231EA5800DE15E3 /* MerchantListCell.swift */,
-				0129B78E22320B7000DE15E3 /* MerchantTableData.swift */,
 				0129B78C2231F2E400DE15E3 /* MerchantListHeader.swift */,
+				019F1ED32234B66600C6E098 /* MapViewController.swift */,
+				019F1EFE2237582300C6E098 /* MerchantDetailController.swift */,
 				0129B7872231EE6B00DE15E3 /* WalletController.swift */,
 				0129B7892231EE7200DE15E3 /* SettingsController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		019F1ED722367A5100C6E098 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0129B78E22320B7000DE15E3 /* MerchantTableData.swift */,
+				019F1ED52234C07C00C6E098 /* Merchant.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		A7498DCA64C774F6F2850BBF /* Pods */ = {
@@ -177,6 +197,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				019F1ED22234B57000C6E098 /* PublicArt.json in Resources */,
 				0129B7762231E72700DE15E3 /* LaunchScreen.storyboard in Resources */,
 				0129B7732231E72700DE15E3 /* Assets.xcassets in Resources */,
 				0129B7712231E72600DE15E3 /* Main.storyboard in Resources */,
@@ -241,12 +262,15 @@
 			files = (
 				0129B7882231EE6B00DE15E3 /* WalletController.swift in Sources */,
 				0129B7862231EE0D00DE15E3 /* extensions.swift in Sources */,
+				019F1EFF2237582300C6E098 /* MerchantDetailController.swift in Sources */,
 				0129B78D2231F2E400DE15E3 /* MerchantListHeader.swift in Sources */,
 				0129B76E2231E72600DE15E3 /* MerchantListController.swift in Sources */,
+				019F1ED62234C07C00C6E098 /* Merchant.swift in Sources */,
 				0129B78A2231EE7200DE15E3 /* SettingsController.swift in Sources */,
 				0129B78F22320B7000DE15E3 /* MerchantTableData.swift in Sources */,
 				0129B76C2231E72600DE15E3 /* AppDelegate.swift in Sources */,
 				0129B77E2231E77800DE15E3 /* MainTabBarController.swift in Sources */,
+				019F1ED42234B66600C6E098 /* MapViewController.swift in Sources */,
 				0129B7842231EA5800DE15E3 /* MerchantListCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

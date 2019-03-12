@@ -16,17 +16,17 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         
         self.delegate = self
         setupViewControllers()
-        
     }
     
     func setupViewControllers() {
         
+        let mapNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "Webp.net-resizeimage-2"), selectedImage: #imageLiteral(resourceName: "Webp.net-resizeimage-2"), rootViewController: MapViewController())
         let merchantNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "home_unselected"), selectedImage: #imageLiteral(resourceName: "home_selected"), rootViewController: MerchantListController(collectionViewLayout: UICollectionViewFlowLayout()))
         let walletNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "wallet_unselected"), selectedImage: #imageLiteral(resourceName: "wallet_selected"))
         let settingsNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "settings_unselected"), selectedImage: #imageLiteral(resourceName: "settings_selected"))
         
         tabBar.tintColor = .black
-        viewControllers = [merchantNavController, walletNavController, settingsNavController]
+        viewControllers = [mapNavController, merchantNavController, walletNavController, settingsNavController]
         
     }
     

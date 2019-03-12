@@ -11,7 +11,7 @@ import UIKit
 
 class MerchantListCell: UICollectionViewCell {
     
-    var data: MerchantTableData? {
+    var data: Merchant? {
         
         didSet{
             setupAttributedCaption()
@@ -20,8 +20,8 @@ class MerchantListCell: UICollectionViewCell {
     
     fileprivate func setupAttributedCaption() {
         guard let data = self.data else {return}
-        let attributedText = NSMutableAttributedString(string: data.name, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
-        attributedText.append(NSAttributedString(string: " \(data.address)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.gray]))
+        let attributedText = NSMutableAttributedString(string: data.title ?? String(""), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
+        attributedText.append(NSAttributedString(string: " \(data.locationName)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.gray]))
         tagLabel.attributedText = attributedText
     }
     
