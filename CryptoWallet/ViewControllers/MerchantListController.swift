@@ -14,7 +14,7 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
 
     let cellId = "cellId"
     let headerId = "headerId"
-    let apiURL = "https://tbb-merchant-api.firebaseapp.com"
+    let apiURL =  "https://travelbybit.github.io/merchant_api/merchants.json"
     
     lazy var searchBar: UISearchBar = {
         let sb = UISearchBar()
@@ -45,7 +45,6 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
     }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
     
         requestMerchantNames()
@@ -55,7 +54,6 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
         collectionView?.backgroundColor = .white
         collectionView?.register(MerchantListCell.self, forCellWithReuseIdentifier: cellId)
                collectionView?.register(MerchantListHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
-        
     }
     
     fileprivate func setupLogo() {
@@ -76,6 +74,8 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
             layout.sectionInset = .init(top: padding, left: padding, bottom: padding, right: padding)
             layout.sectionHeadersPinToVisibleBounds = true
         }
+        
+        collectionView.showsVerticalScrollIndicator = false
         
     }
 

@@ -15,7 +15,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     
     var locationManager = CLLocationManager()
     var merchants = [Merchant]()
-    let apiURL = "https://tbb-merchant-api.firebaseapp.com"
+    var selectedAnnotation: Merchant?
+    let apiURL = "https://travelbybit.github.io/merchant_api/merchants.json"
     
     let mapView: MKMapView = {
         let map = MKMapView()
@@ -29,7 +30,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         setupLocationManager()
         
         loadInitialData()
-        mapView.addAnnotations(merchants)
+        print(merchants) ///// Returns an empty array!
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,6 +90,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
 }
 
 extension MapViewController: MKMapViewDelegate {
+
     // 1
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         // 2
@@ -115,9 +117,14 @@ extension MapViewController: MKMapViewDelegate {
         return view
     }
     
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        self.selectedAnnotation = view.annotation as? Merchant
+    }
+    
     @objc func detailButtonTapped() {
-        print("tap")
+
         let merchantDetailController = MerchantDetailController()
+        merchantDetailController.selectedMerchant = selectedAnnotation
         self.navigationController?.pushViewController(merchantDetailController, animated: true)
     }
   
