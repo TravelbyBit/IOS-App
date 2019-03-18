@@ -11,10 +11,9 @@ import MapKit
 import SwiftyJSON
 import Alamofire
 
-class MapViewController: UIViewController, CLLocationManagerDelegate {
+class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBarDelegate {
     
     var locationManager = CLLocationManager()
-    var merchants = [Merchant]()
     var selectedAnnotation: Merchant?
     let apiURL = "https://travelbybit.github.io/merchant_api/merchants.json"
     
@@ -23,31 +22,89 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         return map
     }()
     
+    var segmentedControl: UISegmentedControl = {
+        let items = ["All" , "Restaurants", "Retail", "Services"]
+        let segCon = UISegmentedControl(items: items)
+        segCon.selectedSegmentIndex = 0
+        segCon.backgroundColor = .white
+        segCon.layer.cornerRadius = 5.0
+        segCon.addTarget(self, action: #selector(indexChanged), for: .valueChanged)
+        return segCon
+    }()
+    
+    var filteredArray = [Merchant]()
+    @objc func indexChanged(sender: UISegmentedControl) {
+        
+        switch sender.selectedSegmentIndex{
+        case 0:
+            filteredArray = ModelArray.sharedInstance.collection
+            refreshMap()
+        case 1:
+            filteredArray = ModelArray.sharedInstance.collection.filter({$0.category == "Dining"})
+            refreshMap()
+        case 2:
+            filteredArray = ModelArray.sharedInstance.collection.filter({$0.category == "Retail"})
+            refreshMap()
+        case 3:
+            filteredArray = ModelArray.sharedInstance.collection.filter({$0.category != "Dining" && $0.category != "Retail"})
+            refreshMap()
+        default:
+            break
+        }
+    }
+    
+    lazy var searchBar: UISearchBar = {
+        let sb = UISearchBar()
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.rgb(red: 230, green: 230, blue: 230)
+        sb.placeholder = "Search Near Your Area"
+        sb.returnKeyType = .done
+        sb.delegate = self
+        
+        let toolBar = UIToolbar()
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.doneClicked))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        toolBar.setItems([spaceButton, doneButton], animated: false)
+        toolBar.sizeToFit()
+        sb.inputAccessoryView = toolBar
+        
+        return sb
+    }()
+    
+    @objc func doneClicked() {
+        searchBar.resignFirstResponder()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupMap()
+        setupHUD()
         setupLocationManager()
-        
         loadInitialData()
-        print(merchants) ///// Returns an empty array!
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        //navigationController?.navigationBar.isHidden = true
+    fileprivate func setupHUD() {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 50))
+        imageView.image = #imageLiteral(resourceName: "logo_transparent")
+        imageView.contentMode = .scaleAspectFit
+        navigationItem.titleView = imageView
+        
+        view.addSubview(segmentedControl)
+        segmentedControl.anchor(top: nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: 15, paddingRight: 20, width: 0, height: 30)
+        
+        view.addSubview(searchBar)
+        searchBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
     }
     
-    func setupMap() {
+    fileprivate func setupMap() {
         view.addSubview(mapView)
         mapView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         mapView.showsUserLocation = true
         mapView.delegate = self
     }
     
-    func setupLocationManager() {
+    fileprivate func setupLocationManager() {
         self.locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
-            
             //Zoom to user location
             if let userLocation = locationManager.location?.coordinate {
                 let viewRegion = MKCoordinateRegion(center: userLocation, latitudinalMeters: 400, longitudinalMeters: 400)
@@ -60,11 +117,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    func loadInitialData()  {
+    fileprivate func loadInitialData()  {
     
         Alamofire.request(apiURL)
             .validate()
             .responseJSON { response in
+                
                 guard response.result.isSuccess else {
                     print("Error while fetching api")
                     return
@@ -78,15 +136,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                         
                         let merchant = swiftyJsonVar[i]
                         let merchantDictionary = merchant.dictionaryObject
-                        let merchantModel = Merchant(json: merchantDictionary!) // how to handle optional?
-                        self.merchants.append(merchantModel!) // for some reason, the array is empty
-                        // after appending the models
-                        self.mapView.addAnnotation(merchantModel!)
+                        let merchantModel = Merchant(json: merchantDictionary!, userLocation: self.locationManager.location?.coordinate ?? CLLocationCoordinate2D(latitude: 0, longitude: 0))
+                        ModelArray.sharedInstance.collection.append(merchantModel!)
                     }
+                    
+                    ModelArray.sharedInstance.collection.sort(by: { $0.distance < $1.distance })
+                    self.filteredArray = ModelArray.sharedInstance.collection
+                    self.refreshMap()
                     
                 }
         }
     }
+    
 }
 
 extension MapViewController: MKMapViewDelegate {
@@ -119,14 +180,18 @@ extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         self.selectedAnnotation = view.annotation as? Merchant
+        
     }
     
     @objc func detailButtonTapped() {
-
         let merchantDetailController = MerchantDetailController()
         merchantDetailController.selectedMerchant = selectedAnnotation
         self.navigationController?.pushViewController(merchantDetailController, animated: true)
     }
-  
     
+    fileprivate func refreshMap() {
+        self.mapView.removeAnnotations(mapView.annotations)
+        self.mapView.addAnnotations(self.filteredArray)
+    }
+  
 }

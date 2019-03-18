@@ -18,7 +18,7 @@
 		0129B7882231EE6B00DE15E3 /* WalletController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129B7872231EE6B00DE15E3 /* WalletController.swift */; };
 		0129B78A2231EE7200DE15E3 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129B7892231EE7200DE15E3 /* SettingsController.swift */; };
 		0129B78D2231F2E400DE15E3 /* MerchantListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129B78C2231F2E400DE15E3 /* MerchantListHeader.swift */; };
-		0129B78F22320B7000DE15E3 /* MerchantTableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129B78E22320B7000DE15E3 /* MerchantTableData.swift */; };
+		0166A164223E41EC00A89AAC /* ModelArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0166A163223E41EC00A89AAC /* ModelArray.swift */; };
 		019F1ED22234B57000C6E098 /* PublicArt.json in Resources */ = {isa = PBXBuildFile; fileRef = 019F1ED12234B57000C6E098 /* PublicArt.json */; };
 		019F1ED42234B66600C6E098 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F1ED32234B66600C6E098 /* MapViewController.swift */; };
 		019F1ED62234C07C00C6E098 /* Merchant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F1ED52234C07C00C6E098 /* Merchant.swift */; };
@@ -40,7 +40,7 @@
 		0129B7872231EE6B00DE15E3 /* WalletController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletController.swift; sourceTree = "<group>"; };
 		0129B7892231EE7200DE15E3 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		0129B78C2231F2E400DE15E3 /* MerchantListHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantListHeader.swift; sourceTree = "<group>"; };
-		0129B78E22320B7000DE15E3 /* MerchantTableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantTableData.swift; sourceTree = "<group>"; };
+		0166A163223E41EC00A89AAC /* ModelArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelArray.swift; sourceTree = "<group>"; };
 		019F1ED12234B57000C6E098 /* PublicArt.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PublicArt.json; sourceTree = "<group>"; };
 		019F1ED32234B66600C6E098 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		019F1ED52234C07C00C6E098 /* Merchant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Merchant.swift; sourceTree = "<group>"; };
@@ -100,9 +100,7 @@
 		0129B78B2231EE7D00DE15E3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				0129B76D2231E72600DE15E3 /* MerchantListController.swift */,
-				0129B7832231EA5800DE15E3 /* MerchantListCell.swift */,
-				0129B78C2231F2E400DE15E3 /* MerchantListHeader.swift */,
+				0166A162223B4A6D00A89AAC /* MerchantCollectionViewControllers */,
 				019F1ED32234B66600C6E098 /* MapViewController.swift */,
 				019F1EFE2237582300C6E098 /* MerchantDetailController.swift */,
 				0129B7872231EE6B00DE15E3 /* WalletController.swift */,
@@ -111,11 +109,21 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		0166A162223B4A6D00A89AAC /* MerchantCollectionViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				0129B76D2231E72600DE15E3 /* MerchantListController.swift */,
+				0129B7832231EA5800DE15E3 /* MerchantListCell.swift */,
+				0129B78C2231F2E400DE15E3 /* MerchantListHeader.swift */,
+			);
+			path = MerchantCollectionViewControllers;
+			sourceTree = "<group>";
+		};
 		019F1ED722367A5100C6E098 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0129B78E22320B7000DE15E3 /* MerchantTableData.swift */,
 				019F1ED52234C07C00C6E098 /* Merchant.swift */,
+				0166A163223E41EC00A89AAC /* ModelArray.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -239,6 +247,8 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CryptoWallet/Pods-CryptoWallet-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/MapViewPlus/MapViewPlus.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -246,6 +256,8 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapViewPlus.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,7 +279,7 @@
 				0129B76E2231E72600DE15E3 /* MerchantListController.swift in Sources */,
 				019F1ED62234C07C00C6E098 /* Merchant.swift in Sources */,
 				0129B78A2231EE7200DE15E3 /* SettingsController.swift in Sources */,
-				0129B78F22320B7000DE15E3 /* MerchantTableData.swift in Sources */,
+				0166A164223E41EC00A89AAC /* ModelArray.swift in Sources */,
 				0129B76C2231E72600DE15E3 /* AppDelegate.swift in Sources */,
 				0129B77E2231E77800DE15E3 /* MainTabBarController.swift in Sources */,
 				019F1ED42234B66600C6E098 /* MapViewController.swift in Sources */,

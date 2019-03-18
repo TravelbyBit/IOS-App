@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 import Alamofire
+import MapKit
 
 class MerchantListController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
 
@@ -23,44 +24,35 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
         sb.placeholder = "Search Merchants near you"
         sb.returnKeyType = .done
         sb.delegate = self
-        
-        let toolBar = UIToolbar()
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.doneClicked))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-        toolBar.setItems([spaceButton, doneButton], animated: false)
-        toolBar.sizeToFit()
-        sb.inputAccessoryView = toolBar
 
         return sb
     }()
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        //Filter
+        if searchText.isEmpty {
+            filteredMerchants = ModelArray.sharedInstance.collection
+        } else {
+            filteredMerchants = ModelArray.sharedInstance.collection.filter { (merchant) -> Bool in
+                return merchant.title!.lowercased().contains(searchText.lowercased())
+            }
+        }
+        self.collectionView?.reloadData()
+    }
     
     @objc func doneClicked() {
         searchBar.resignFirstResponder()
     }
     
-    var data = [Merchant]()
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-    }
-    
+    var filteredMerchants = [Merchant]()
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        requestMerchantNames()
-        configureCollectionViewLayout()
-        setupLogo()
+  
+        filteredMerchants = ModelArray.sharedInstance.collection
         
-        collectionView?.backgroundColor = .white
+        configureCollectionViewLayout()
         collectionView?.register(MerchantListCell.self, forCellWithReuseIdentifier: cellId)
                collectionView?.register(MerchantListHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
-    }
-    
-    fileprivate func setupLogo() {
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 50))
-        imageView.image = #imageLiteral(resourceName: "logo_transparent")
-        imageView.contentMode = .scaleAspectFit
-        navigationItem.titleView = imageView
     }
     
     fileprivate func configureCollectionViewLayout() {
@@ -75,25 +67,28 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
             layout.sectionHeadersPinToVisibleBounds = true
         }
         
+        collectionView.bounces = false
+        collectionView?.keyboardDismissMode = .onDrag
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.backgroundColor = UIColor.rgb(red: 4, green: 58, blue: 79)
         
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.data.count
+        return filteredMerchants.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MerchantListCell
-        let indexData = data[indexPath.row]
+        let indexData = filteredMerchants[indexPath.row]
         cell.data = indexData
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 40)
+        return CGSize(width: view.frame.width, height: 80)
     }
     
     var header: MerchantListHeader?
@@ -110,6 +105,7 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
     
     @objc func tapDetected() {
         let merchantDetailController = MerchantDetailController()
+        merchantDetailController.selectedMerchant = self.selectedMerchant
         self.navigationController?.pushViewController(merchantDetailController, animated: true)
     }
     
@@ -121,46 +117,17 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
         searchBar.isHidden = false
     }
     
+    fileprivate var selectedMerchant: Merchant?
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let indexData = data[indexPath.row]
+        let indexData = ModelArray.sharedInstance.collection[indexPath.row]
+        self.selectedMerchant = indexData
         self.header?.merchantNameLabel.text = indexData.title
         
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 200)
+        return CGSize(width: view.frame.width, height: 250)
     }
     
-    
 }
-
-
-extension MerchantListController {
-    
-    func requestMerchantNames() {
-
-        Alamofire.request(apiURL).responseJSON { (responseData) -> Void in
-            if((responseData.result.value) != nil) {
-                let swiftyJsonVar = JSON(responseData.result.value!)
-                let count = swiftyJsonVar.count
-                
-                for i in 0...count-1 {
-                    
-                    let merchant = swiftyJsonVar[i]
-                    let merchantDictionary = merchant.dictionaryObject
-                    let merchantModel = Merchant(json: merchantDictionary!)
-                    self.data.append(merchantModel!)
-                    
-                }
-                
-                self.collectionView.reloadData()
-            }
-        }
-        
-        
-    }
-    
-    
-}
-

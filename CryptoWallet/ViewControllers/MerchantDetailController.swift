@@ -77,7 +77,6 @@ class MerchantDetailController: UIViewController, UIScrollViewDelegate {
         view.backgroundColor = .white
         
         setupHUD()
-
     }
     
     func setupHUD() {
@@ -89,7 +88,7 @@ class MerchantDetailController: UIViewController, UIScrollViewDelegate {
         
         view.addSubview(scrollView)
         scrollView.anchor(top: merchantAddressLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 4, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.frame.width, height: view.frame.width)
-        imageArray = [#imageLiteral(resourceName: "testimage2"), #imageLiteral(resourceName: "testimage1")]
+        imageArray = [#imageLiteral(resourceName: "sample_photo"), #imageLiteral(resourceName: "sample_photo")]
         setupImages(imageArray)
         
         let stackView = UIStackView(arrangedSubviews: [callButton, directionsButton])
@@ -121,7 +120,7 @@ class MerchantDetailController: UIViewController, UIScrollViewDelegate {
     }
     
     @objc func attemptCalling() {
-        guard let number = URL(string: "tel://" + String(0422424757)) else { return }
+        guard let number = URL(string: "tel://" + String("feature-coming-soon")) else { return }
         UIApplication.shared.open(number)
     }
     

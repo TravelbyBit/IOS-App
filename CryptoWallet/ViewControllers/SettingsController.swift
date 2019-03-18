@@ -11,9 +11,31 @@ import UIKit
 
 class SettingsController: UIViewController {
     
+    let comingSoonLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Settings feature coming soon!"
+        label.textColor = .white
+        label.textAlignment = .center
+        return label
+    }()
+    
+    let feedbackLabel: UILabel = {
+        let label = UILabel()
+        label.text = "feedback/suggestions: seanchoi05@gmail.com"
+        label.textColor = .white
+        label.textAlignment = .center
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .red
+        self.view.backgroundColor = .black
+        
+        view.addSubview(comingSoonLabel)
+        comingSoonLabel.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        
+        view.addSubview(feedbackLabel)
+        feedbackLabel.anchor(top: nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 5, paddingRight: 0, width: 0, height: 0)
     }
     
 }
