@@ -20,15 +20,16 @@ class MerchantListHeader: UICollectionViewCell {
     
     var merchantHours: UILabel = {
         let label = UILabel()
-        label.text = "Open Hours: 8:00 am - 8:00 pm"
+        label.text = "COMING SOON"
         label.font = UIFont.systemFont(ofSize: 10)
         return label
     }()
     
     var acceptedCoinsLabel: UILabel = {
         let label = UILabel()
-        label.text = "Accepts: Bitcoin, Ethereum, Litecoin"
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.text = "Accepted Coins: COMING SOON"
+        label.textColor = .white
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
     
@@ -56,14 +57,14 @@ class MerchantListHeader: UICollectionViewCell {
         addSubview(merchantNameLabel)
         addSubview(merchantHours)
         addSubview(acceptedCoinsLabel)
-        addSubview(arrowImageView)
+        //addSubview(arrowImageView)
         
         merchantNameLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 4, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         merchantHours.anchor(top: merchantNameLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         acceptedCoinsLabel.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 4, paddingBottom: 4, paddingRight: 0, width: 0, height: 0)
         backgroundImageView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        arrowImageView.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 10, width: 30, height: 30)
-        arrowImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        //arrowImageView.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 10, width: 30, height: 30)
+        //arrowImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

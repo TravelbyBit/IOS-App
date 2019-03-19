@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "tbb new logo long-2.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "settings_unselected@2x.png",
       "scale" : "2x"
     },
     {

@@ -21,7 +21,7 @@ class WalletController: UIViewController {
     
     let feedbackLabel: UILabel = {
         let label = UILabel()
-        label.text = "feedback/suggestions: seanchoi05@gmail.com"
+        label.text = "https://github.com/TravelbyBit/iOS-App"
         label.textColor = .white
         label.textAlignment = .center
         return label

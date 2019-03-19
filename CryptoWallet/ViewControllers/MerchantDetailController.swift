@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
 
 class MerchantDetailController: UIViewController, UIScrollViewDelegate {
     
@@ -125,13 +127,23 @@ class MerchantDetailController: UIViewController, UIScrollViewDelegate {
     }
     
     @objc func openGoogleMaps() {
-        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+        if UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!) {
             
-            UIApplication.shared.open(URL(string:
-                "comgooglemaps://?center=\(0),\(0)&zoom=14&views=traffic")!, options: [:])
+            UIApplication.shared.open(URL(string:  "comgooglemaps://?saddr=&daddr=\(self.selectedMerchant!.coordinate.latitude),\(self.selectedMerchant!.coordinate.longitude)&directionsmode=driving")!, options: [:])
             
+
         } else {
-            print("Can't use comgooglemaps://")
+            print("Opening in Apple Map")
+            
+            let coordinate = CLLocationCoordinate2DMake(self.selectedMerchant!.coordinate.latitude, self.selectedMerchant!.coordinate.longitude)
+            let region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.02))
+            let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
+            let mapItem = MKMapItem(placemark: placemark)
+            let options = [
+                MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: region.center),
+                MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: region.span)]
+            mapItem.name = self.selectedMerchant?.title
+            mapItem.openInMaps(launchOptions: options)
         }
     }
     

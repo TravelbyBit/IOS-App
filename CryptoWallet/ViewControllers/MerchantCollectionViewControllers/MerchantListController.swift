@@ -10,8 +10,9 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 import MapKit
+import CoreLocation
 
-class MerchantListController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
+class MerchantListController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, CLLocationManagerDelegate {
 
     let cellId = "cellId"
     let headerId = "headerId"
@@ -47,12 +48,25 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
     var filteredMerchants = [Merchant]()
     override func viewDidLoad() {
         super.viewDidLoad()
-  
+        
+        checkUsersLocationServicesAuthorization()
         filteredMerchants = ModelArray.sharedInstance.collection
         
         configureCollectionViewLayout()
         collectionView?.register(MerchantListCell.self, forCellWithReuseIdentifier: cellId)
                collectionView?.register(MerchantListHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
+    }
+    
+    var isUserLocationEnabled = false
+    func checkUsersLocationServicesAuthorization() {
+        if CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            isUserLocationEnabled = true
+            ModelArray.sharedInstance.collection.sort(by: { $0.distance < $1.distance })
+            
+        } else {
+            presentAlert()
+            isUserLocationEnabled = false
+        }
     }
     
     fileprivate func configureCollectionViewLayout() {
@@ -70,7 +84,7 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
         collectionView.bounces = false
         collectionView?.keyboardDismissMode = .onDrag
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = UIColor.rgb(red: 4, green: 58, blue: 79)
+        collectionView.backgroundColor = UIColor.white
         
     }
 
@@ -83,6 +97,10 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MerchantListCell
         let indexData = filteredMerchants[indexPath.row]
         cell.data = indexData
+        
+        if isUserLocationEnabled == false {
+            cell.distanceLabel.isHidden = true
+        }
         
         return cell
     }
@@ -97,8 +115,8 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! MerchantListHeader
         self.header = header
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(tapDetected))
-        header.addGestureRecognizer(tapGestureRecognizer)
+        //let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(tapDetected))
+        //header.addGestureRecognizer(tapGestureRecognizer)
         
         return header
     }
@@ -127,7 +145,31 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 250)
+        return CGSize(width: view.frame.width, height: 220)
+    }
+    
+}
+
+extension MerchantListController {
+    
+    fileprivate func presentAlert() {
+        // Disable location features
+        let alert = UIAlertController(title: "Allow Location Access", message: "MyApp needs access to your location. Turn on Location Services in your device settings.", preferredStyle: UIAlertController.Style.alert)
+        
+        // Button to Open Settings
+        alert.addAction(UIAlertAction(title: "Not now", style: UIAlertAction.Style.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Settings", style: UIAlertAction.Style.default, handler: { action in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                    print("Settings opened: \(success)")
+                })
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
+        
     }
     
 }

@@ -83,16 +83,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     }
     
     fileprivate func setupHUD() {
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 50))
-        imageView.image = #imageLiteral(resourceName: "logo_transparent")
-        imageView.contentMode = .scaleAspectFit
-        navigationItem.titleView = imageView
+        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: 170, height: 40))
+        let titleImageView = UIImageView(image: #imageLiteral(resourceName: "logo"))
+        titleImageView.contentMode = .scaleAspectFit
+        titleImageView.frame = CGRect(x: 0, y: 0, width: titleView.frame.width, height: titleView.frame.height)
+        titleView.addSubview(titleImageView)
+        navigationItem.titleView = titleView
         
         view.addSubview(segmentedControl)
         segmentedControl.anchor(top: nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: 15, paddingRight: 20, width: 0, height: 30)
         
-        view.addSubview(searchBar)
-        searchBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
+        //view.addSubview(searchBar)
+        //searchBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
     }
     
     fileprivate func setupMap() {
@@ -114,6 +116,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
+            locationManager.startUpdatingHeading()
         }
     }
     
@@ -140,7 +143,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
                         ModelArray.sharedInstance.collection.append(merchantModel!)
                     }
                     
-                    ModelArray.sharedInstance.collection.sort(by: { $0.distance < $1.distance })
                     self.filteredArray = ModelArray.sharedInstance.collection
                     self.refreshMap()
                     
@@ -184,14 +186,36 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     @objc func detailButtonTapped() {
-        let merchantDetailController = MerchantDetailController()
-        merchantDetailController.selectedMerchant = selectedAnnotation
-        self.navigationController?.pushViewController(merchantDetailController, animated: true)
+        //let merchantDetailController = MerchantDetailController()
+        //merchantDetailController.selectedMerchant = selectedAnnotation
+        //self.navigationController?.pushViewController(merchantDetailController, animated: true)
+        openGoogleMaps()
     }
     
     fileprivate func refreshMap() {
         self.mapView.removeAnnotations(mapView.annotations)
         self.mapView.addAnnotations(self.filteredArray)
+    }
+    
+    @objc func openGoogleMaps() {
+        if UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!) {
+            
+            UIApplication.shared.open(URL(string:  "comgooglemaps://?saddr=&daddr=\(self.selectedAnnotation!.coordinate.latitude),\(self.selectedAnnotation!.coordinate.longitude)&directionsmode=driving")!, options: [:])
+            
+            
+        } else {
+            print("Opening in Apple Map")
+            
+            let coordinate = CLLocationCoordinate2DMake(self.selectedAnnotation!.coordinate.latitude, self.selectedAnnotation!.coordinate.longitude)
+            let region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.02))
+            let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
+            let mapItem = MKMapItem(placemark: placemark)
+            let options = [
+                MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: region.center),
+                MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: region.span)]
+            mapItem.name = self.selectedAnnotation?.title
+            mapItem.openInMaps(launchOptions: options)
+        }
     }
   
 }

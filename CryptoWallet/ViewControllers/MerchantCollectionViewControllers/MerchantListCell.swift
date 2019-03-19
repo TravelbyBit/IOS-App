@@ -51,20 +51,22 @@ class MerchantListCell: UICollectionViewCell {
     var merchantNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.textColor = UIColor.rgb(red: 38, green: 181, blue: 171)
+        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 0
+        label.textColor = UIColor.black
         return label
     }()
     
     var addressLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 15)
         return label
     }()
     
     var distanceLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .yellow
+        label.textColor = .brown
         label.font = UIFont.systemFont(ofSize: 9)
         label.textAlignment = .center
         return label
@@ -76,7 +78,7 @@ class MerchantListCell: UICollectionViewCell {
     }
     
     func setupCell() {
-        
+
         self.addSubview(merchantTypeImageView)
         merchantTypeImageView.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         merchantTypeImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
