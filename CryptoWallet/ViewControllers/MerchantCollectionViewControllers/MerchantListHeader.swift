@@ -13,14 +13,14 @@ class MerchantListHeader: UICollectionViewCell {
     
     var merchantNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Sean's Coffee Shop"
+        label.text = "Select Merchant"
         label.font = UIFont.boldSystemFont(ofSize: 24)
         return label
     }()
     
     var merchantHours: UILabel = {
         let label = UILabel()
-        label.text = "COMING SOON"
+        label.text = "Hours: COMING SOON"
         label.font = UIFont.systemFont(ofSize: 10)
         return label
     }()

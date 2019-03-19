@@ -29,15 +29,15 @@ class MerchantListCell: UICollectionViewCell {
     fileprivate func setupImage() {
         switch data?.category{
         case "Dining":
-            merchantTypeImageView.image = #imageLiteral(resourceName: "restaurant")
+            merchantTypeImageView.image = #imageLiteral(resourceName: "dining")
         case "Retail":
             merchantTypeImageView.image = #imageLiteral(resourceName: "retail")
         case "Travel":
             merchantTypeImageView.image = #imageLiteral(resourceName: "travel")
         case "Beverage":
-            merchantTypeImageView.image = #imageLiteral(resourceName: "beverage")
+            merchantTypeImageView.image = #imageLiteral(resourceName: "drink")
         default:
-            merchantTypeImageView.image = #imageLiteral(resourceName: "service")
+            merchantTypeImageView.image = #imageLiteral(resourceName: "service-1")
         }
     }
     
@@ -67,7 +67,7 @@ class MerchantListCell: UICollectionViewCell {
     var distanceLabel: UILabel = {
         let label = UILabel()
         label.textColor = .brown
-        label.font = UIFont.systemFont(ofSize: 9)
+        label.font = UIFont.systemFont(ofSize: 10)
         label.textAlignment = .center
         return label
     }()
