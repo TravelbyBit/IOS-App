@@ -21,16 +21,6 @@ class Merchant: NSObject, MKAnnotation {
         return address
     }
     
-    init(title: String, address: String, category: String, coordinate: CLLocationCoordinate2D) {
-        self.title = title
-        self.address = address
-        self.category = category
-        self.coordinate = coordinate
-        self.distance = 0
-
-        super.init()
-    }
-    
     init?(json: [String: Any], userLocation: CLLocationCoordinate2D) {
         // 1
         self.title = json["merchant"] as? String ?? "No Title"

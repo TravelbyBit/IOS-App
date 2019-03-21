@@ -25,7 +25,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     var zoomButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .white
-        button.setImage(#imageLiteral(resourceName: "location_logo"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "current_location"), for: .normal)
         button.addTarget(self, action: #selector(zoomToCurrentUserLocation), for: .touchUpInside)
         button.layer.cornerRadius = 15
         button.clipsToBounds = true
