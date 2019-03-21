@@ -13,17 +13,17 @@ import SwiftyJSON
 class Merchant: NSObject, MKAnnotation {
     
     let title: String?
-    let locationName: String
+    let address: String
     let category: String
     let coordinate: CLLocationCoordinate2D
     var distance: Double
     var subtitle: String? {
-        return locationName
+        return address
     }
     
-    init(title: String, locationName: String, category: String, coordinate: CLLocationCoordinate2D) {
+    init(title: String, address: String, category: String, coordinate: CLLocationCoordinate2D) {
         self.title = title
-        self.locationName = locationName
+        self.address = address
         self.category = category
         self.coordinate = coordinate
         self.distance = 0
@@ -34,7 +34,7 @@ class Merchant: NSObject, MKAnnotation {
     init?(json: [String: Any], userLocation: CLLocationCoordinate2D) {
         // 1
         self.title = json["merchant"] as? String ?? "No Title"
-        self.locationName = json["location"] as! String
+        self.address = json["location"] as! String
         self.category = json["category"] as! String
 
         // 2

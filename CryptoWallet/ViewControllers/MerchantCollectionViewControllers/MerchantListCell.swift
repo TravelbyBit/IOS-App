@@ -21,7 +21,7 @@ class MerchantListCell: UICollectionViewCell {
     fileprivate func setupCellDetails() {
         guard let data = self.data else {return}
         merchantNameLabel.text = data.title
-        addressLabel.text = data.locationName
+        addressLabel.text = data.address
         distanceLabel.text = "\((data.distance/1000).rounded(toPlaces: 1)) km"
         setupImage()
     }
@@ -80,7 +80,7 @@ class MerchantListCell: UICollectionViewCell {
     func setupCell() {
 
         self.addSubview(merchantTypeImageView)
-        merchantTypeImageView.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        merchantTypeImageView.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 35, height: 35)
         merchantTypeImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         
         self.addSubview(merchantNameLabel)

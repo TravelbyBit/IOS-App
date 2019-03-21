@@ -20,7 +20,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     func setupViewControllers() {
         
-        let mapNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "map_logo"), selectedImage: #imageLiteral(resourceName: "map_logo"), rootViewController: MapViewController())
+        let mapNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "maps_icon"), selectedImage: #imageLiteral(resourceName: "maps_icon").withRenderingMode(.alwaysOriginal), rootViewController: MapViewController())
         let merchantNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "search_logo"), selectedImage: #imageLiteral(resourceName: "search_logo"), rootViewController: MerchantListController(collectionViewLayout: UICollectionViewFlowLayout()))
         let walletNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "wallet_unselected"), selectedImage: #imageLiteral(resourceName: "wallet_selected"), rootViewController: WalletController())
         let settingsNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "settings_logo"), selectedImage: #imageLiteral(resourceName: "settings_logo"), rootViewController: SettingsController())

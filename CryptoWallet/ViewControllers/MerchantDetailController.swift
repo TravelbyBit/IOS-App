@@ -70,7 +70,7 @@ class MerchantDetailController: UIViewController, UIScrollViewDelegate {
         
         didSet{
             merchantNameLabel.text = selectedMerchant?.title
-            merchantAddressLabel.text = selectedMerchant?.locationName
+            merchantAddressLabel.text = selectedMerchant?.address
         }
     }
 

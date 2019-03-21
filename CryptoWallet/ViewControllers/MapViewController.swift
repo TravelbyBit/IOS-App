@@ -22,6 +22,20 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         return map
     }()
     
+    var zoomButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.setImage(#imageLiteral(resourceName: "currentLocation"), for: .normal)
+        button.addTarget(self, action: #selector(zoomToCurrentUserLocation), for: .touchUpInside)
+        button.layer.cornerRadius = 15
+        button.clipsToBounds = true
+        return button
+    }()
+    
+    @objc func zoomToCurrentUserLocation() {
+        setupLocationManager()
+    }
+    
     var segmentedControl: UISegmentedControl = {
         let items = ["All" , "Restaurants", "Retail", "Services"]
         let segCon = UISegmentedControl(items: items)
@@ -93,6 +107,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         view.addSubview(segmentedControl)
         segmentedControl.anchor(top: nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: 15, paddingRight: 20, width: 0, height: 30)
         
+        view.addSubview(zoomButton)
+        zoomButton.anchor(top: nil, left: nil, bottom: segmentedControl.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 15, paddingRight: 20, width: 30, height: 30)
+        
         //view.addSubview(searchBar)
         //searchBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
     }
@@ -109,14 +126,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         if CLLocationManager.locationServicesEnabled() {
             //Zoom to user location
             if let userLocation = locationManager.location?.coordinate {
-                let viewRegion = MKCoordinateRegion(center: userLocation, latitudinalMeters: 400, longitudinalMeters: 400)
+                let viewRegion = MKCoordinateRegion(center: userLocation, latitudinalMeters: 600, longitudinalMeters: 600)
                 mapView.setRegion(viewRegion, animated: false)
             }
             
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
-            locationManager.startUpdatingHeading()
         }
     }
     
@@ -151,6 +167,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     }
     
 }
+
 
 extension MapViewController: MKMapViewDelegate {
 

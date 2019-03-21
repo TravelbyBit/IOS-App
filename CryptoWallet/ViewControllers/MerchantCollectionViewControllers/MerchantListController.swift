@@ -138,7 +138,7 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
     fileprivate var selectedMerchant: Merchant?
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let indexData = ModelArray.sharedInstance.collection[indexPath.row]
+        let indexData = filteredMerchants[indexPath.row]
         self.selectedMerchant = indexData
         self.header?.merchantNameLabel.text = indexData.title
         
