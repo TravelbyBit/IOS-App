@@ -8,13 +8,14 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 class SettingsController: UIViewController {
     
     let comingSoonLabel: UILabel = {
         let label = UILabel()
         label.text = "Settings feature coming soon!"
-        label.textColor = .white
+        label.textColor = .black
         label.textAlignment = .center
         return label
     }()
@@ -22,15 +23,15 @@ class SettingsController: UIViewController {
     let feedbackLabel: UILabel = {
         let label = UILabel()
         label.text = "https://github.com/TravelbyBit/iOS-App"
-        label.textColor = .white
+        label.textColor = .black
         label.textAlignment = .center
         return label
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .black
-        
+        self.view.backgroundColor = .white
+  
         view.addSubview(comingSoonLabel)
         comingSoonLabel.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
@@ -39,3 +40,4 @@ class SettingsController: UIViewController {
     }
     
 }
+

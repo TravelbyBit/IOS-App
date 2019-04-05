@@ -22,7 +22,9 @@ class MerchantListCell: UICollectionViewCell {
         guard let data = self.data else {return}
         merchantNameLabel.text = data.title
         addressLabel.text = data.address
-        distanceLabel.text = "\((data.distance/1000).rounded(toPlaces: 1)) km"
+        if let distance = data.distance {
+            distanceLabel.text = "\((distance/1000).rounded(toPlaces: 1)) km"
+        }
         setupImage()
     }
     
@@ -52,7 +54,7 @@ class MerchantListCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.adjustsFontSizeToFitWidth = true
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         label.textColor = UIColor.black
         return label
     }()
@@ -60,6 +62,8 @@ class MerchantListCell: UICollectionViewCell {
     var addressLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
+        label.numberOfLines = 0
+        label.sizeToFit()
         label.font = UIFont.systemFont(ofSize: 15)
         return label
     }()
@@ -70,6 +74,13 @@ class MerchantListCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 10)
         label.textAlignment = .center
         return label
+    }()
+    
+    var arrowImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "right-arrow")
+        iv.contentMode = .scaleAspectFit
+        return iv
     }()
     
     override init(frame: CGRect) {
@@ -87,11 +98,14 @@ class MerchantListCell: UICollectionViewCell {
         merchantNameLabel.anchor(top: topAnchor, left: merchantTypeImageView.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 15, paddingBottom: 0, paddingRight: 5, width: 0, height: 30)
         
         self.addSubview(addressLabel)
-        addressLabel.anchor(top: merchantNameLabel.bottomAnchor, left: merchantTypeImageView.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 15, paddingBottom: 0, paddingRight: 5, width: 0, height: 30)
+        addressLabel.anchor(top: merchantNameLabel.bottomAnchor, left: merchantTypeImageView.rightAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 15, paddingBottom: 10, paddingRight: 30, width: 0, height: 0)
         
         self.addSubview(distanceLabel)
         distanceLabel.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 60, height: 20)
         distanceLabel.centerXAnchor.constraint(equalTo: merchantTypeImageView.centerXAnchor).isActive = true
+        
+        self.addSubview(arrowImageView)
+        arrowImageView.anchor(top: topAnchor, left: addressLabel.rightAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 35, paddingLeft: 10, paddingBottom: 35, paddingRight: 0, width: 0, height: 0)
         
         let seperatorView = UIView()
         seperatorView.backgroundColor = UIColor(white: 0, alpha: 0.5)

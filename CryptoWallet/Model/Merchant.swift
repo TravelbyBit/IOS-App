@@ -16,28 +16,24 @@ class Merchant: NSObject, MKAnnotation {
     let address: String
     let category: String
     let coordinate: CLLocationCoordinate2D
-    var distance: Double
+    var distance: Double?
     var subtitle: String? {
         return address
     }
     
-    init?(json: [String: Any], userLocation: CLLocationCoordinate2D) {
+    init?(json: [String: Any], userLocation: CLLocationCoordinate2D?) {
         // 1
-        self.title = json["merchant"] as? String ?? "No Title"
+        self.title = json["merchant"] as? String
         self.address = json["location"] as! String
         self.category = json["category"] as! String
-
         // 2
-        if let latitude = Double(json["latitude"] as? String ?? String(0)),
-            let longitude = Double(json["longitude"] as? String ?? String(0)) {
-            self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            
-            self.distance = CLLocation(latitude: latitude , longitude: longitude).distance(from: CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude))
-        } else {
-            self.coordinate = CLLocationCoordinate2D()
-            self.distance = 0
+        let latitude = Double(json["latitude"] as! String)
+        let longitude = Double(json["longitude"] as! String)
+        
+        self.coordinate = CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!)
+        if let userLocation = userLocation {
+            self.distance = CLLocation(latitude: latitude! , longitude: longitude!).distance(from: CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude))
         }
-
     }
 
 

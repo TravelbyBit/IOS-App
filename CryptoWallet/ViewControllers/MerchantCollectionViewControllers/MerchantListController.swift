@@ -1,93 +1,66 @@
 //
 //  ViewController.swift
 //  CryptoWallet
-//
-//  Created by AI on 8/3/19.
-//  Copyright © 2019 AI. All rights reserved.
-//
 
 import UIKit
 import SwiftyJSON
 import Alamofire
 import MapKit
 import CoreLocation
+import GooglePlaces
 
-class MerchantListController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, CLLocationManagerDelegate {
+class MerchantListController: UICollectionViewController, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate {
 
-    let cellId = "cellId"
-    let headerId = "headerId"
-    let apiURL =  "https://travelbybit.github.io/merchant_api/merchants.json"
-    
-    lazy var searchBar: UISearchBar = {
-        let sb = UISearchBar()
-        sb.barTintColor = .gray
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.rgb(red: 230, green: 230, blue: 230)
-        sb.placeholder = "Search Merchants near you"
-        sb.returnKeyType = .done
-        sb.delegate = self
-
-        return sb
-    }()
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        //Filter
-        if searchText.isEmpty {
-            filteredMerchants = ModelArray.sharedInstance.collection
-        } else {
-            filteredMerchants = ModelArray.sharedInstance.collection.filter { (merchant) -> Bool in
-                return merchant.title!.lowercased().contains(searchText.lowercased())
-            }
-        }
-        self.collectionView?.reloadData()
-    }
-    
-    @objc func doneClicked() {
-        searchBar.resignFirstResponder()
-    }
-    
+    fileprivate let cellId = "cellId"
+    fileprivate let headerId = "headerId"
+    fileprivate let apiURL =  API.merchantAPI
+    fileprivate let padding: CGFloat = 16
+    fileprivate let headerHeight: CGFloat = 425
     var filteredMerchants = [Merchant]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         checkUsersLocationServicesAuthorization()
+        setUpHUD()
+        configureCollectionView()
         filteredMerchants = ModelArray.sharedInstance.collection
-        
-        configureCollectionViewLayout()
-        collectionView?.register(MerchantListCell.self, forCellWithReuseIdentifier: cellId)
-               collectionView?.register(MerchantListHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
-    }
-    
-    var isUserLocationEnabled = false
-    func checkUsersLocationServicesAuthorization() {
-        if CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            isUserLocationEnabled = true
-            ModelArray.sharedInstance.collection.sort(by: { $0.distance < $1.distance })
-            
-        } else {
-            presentAlert()
-            isUserLocationEnabled = false
-        }
-    }
-    
-    fileprivate func configureCollectionViewLayout() {
-        //create sticky header
-        navigationController?.navigationBar.addSubview(searchBar)
-        let navBar = navigationController?.navigationBar
-        searchBar.anchor(top: navBar?.topAnchor, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
-        
-        if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
-            let padding: CGFloat = 10
-            layout.sectionInset = .init(top: padding, left: padding, bottom: padding, right: padding)
-            layout.sectionHeadersPinToVisibleBounds = true
-        }
-        
-        collectionView.bounces = false
-        collectionView?.keyboardDismissMode = .onDrag
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = UIColor.white
-        
     }
 
+    func checkUsersLocationServicesAuthorization() {
+        if CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            ModelArray.sharedInstance.collection.sort(by: { $0.distance! < $1.distance! })
+        } else {
+            presentAlert()
+        }
+    }
+    
+    fileprivate func setUpHUD() {
+        self.navigationController?.isNavigationBarHidden = true
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
+        
+        //scrollToTop Button
+        self.view.addSubview(scrollToTopButton)
+        scrollToTopButton.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 15, paddingRight: 15, width: 40, height: 40)
+    }
+    
+    fileprivate func configureCollectionView() {
+        scrollViewDidScroll(collectionView)
+        //collectionView layout
+        if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.sectionInset = .init(top: padding, left: padding, bottom: padding, right: padding)
+        }
+        self.navigationController?.navigationBar.barTintColor = UIColor.rgb(red: 246, green: 60, blue: 90).withAlphaComponent(0.8)
+        collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.bounces = false
+        collectionView?.keyboardDismissMode = .onDrag
+        collectionView.backgroundColor = UIColor.groupTableViewBackground
+        
+        collectionView?.register(MerchantListCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(MerchantListHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
+    }
+
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return filteredMerchants.count
     }
@@ -98,15 +71,17 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
         let indexData = filteredMerchants[indexPath.row]
         cell.data = indexData
         
-        if isUserLocationEnabled == false {
-            cell.distanceLabel.isHidden = true
-        }
-        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 80)
+        let sectionInset = (collectionViewLayout as! UICollectionViewFlowLayout).sectionInset
+        let referenceWidth = collectionView.safeAreaLayoutGuide.layoutFrame.width
+            - sectionInset.left
+            - sectionInset.right
+            - collectionView.contentInset.left
+            - collectionView.contentInset.right
+        return CGSize(width: referenceWidth, height: 80)
     }
     
     var header: MerchantListHeader?
@@ -114,38 +89,71 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
         
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! MerchantListHeader
         self.header = header
-        
-        //let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(tapDetected))
-        //header.addGestureRecognizer(tapGestureRecognizer)
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(tapDetected))
+        header.addGestureRecognizer(tapGestureRecognizer)
         
         return header
     }
     
     @objc func tapDetected() {
+        //temporary promotion
         let merchantDetailController = MerchantDetailController()
-        merchantDetailController.selectedMerchant = self.selectedMerchant
+        merchantDetailController.selectedMerchant = Merchant(json: ["merchant": "Nom Nom Korean Eatery", "location": "4/6 Warner St, Fortitude Valley QLD 4006", "category": "n/a", "latitude": "0", "longitude": "0"], userLocation: CLLocationCoordinate2D())
+        merchantDetailController.merchantImageView.image = #imageLiteral(resourceName: "bibimbap")
         self.navigationController?.pushViewController(merchantDetailController, animated: true)
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        searchBar.isHidden = true
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        searchBar.isHidden = false
-    }
-    
-    fileprivate var selectedMerchant: Merchant?
+
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let indexData = filteredMerchants[indexPath.row]
-        self.selectedMerchant = indexData
-        self.header?.merchantNameLabel.text = indexData.title
-        
+        let vc = MerchantDetailController()
+        vc.selectedMerchant = indexData
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 220)
+        return CGSize(width: view.frame.width, height: headerHeight)
+    }
+    
+    var scrollToTopButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.setImage(#imageLiteral(resourceName: "up-arrow"), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        button.addTarget(self, action: #selector(scrollToTop), for: .touchUpInside)
+        button.layer.cornerRadius = 20
+        button.clipsToBounds = true
+        button.isHidden = true
+        return button
+    }()
+    
+    @objc func scrollToTop() {
+        collectionView.setContentOffset(.zero, animated: true)
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let scrollPos = self.collectionView.contentOffset.y
+        if(scrollPos >= 250){
+            //Fully hide your toolbar
+            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: {
+                self.navigationController?.navigationBar.alpha = 1
+                self.navigationController?.isNavigationBarHidden = false
+                self.scrollToTopButton.isHidden = false
+                self.scrollToTopButton.alpha = 1
+            }, completion: nil)
+        } else {
+            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
+                self.navigationController?.navigationBar.alpha = 0
+                self.navigationController?.isNavigationBarHidden = true
+                self.scrollToTopButton.alpha = 0
+            }, completion: nil)
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //fix bug after transition to detail controller
+        scrollViewDidScroll(collectionView)
     }
     
 }
@@ -154,7 +162,7 @@ extension MerchantListController {
     
     fileprivate func presentAlert() {
         // Disable location features
-        let alert = UIAlertController(title: "Allow Location Access", message: "MyApp needs access to your location. Turn on Location Services in your device settings.", preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: "Allow Location Access", message: "Please turn on Location Services in your device settings.", preferredStyle: UIAlertController.Style.alert)
         
         // Button to Open Settings
         alert.addAction(UIAlertAction(title: "Not now", style: UIAlertAction.Style.default, handler: nil))
@@ -169,7 +177,6 @@ extension MerchantListController {
             }
         }))
         self.present(alert, animated: true, completion: nil)
-        
     }
     
 }
