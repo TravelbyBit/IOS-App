@@ -2,15 +2,25 @@
 //  MerchantListHeader.swift
 //  CryptoWallet
 //
-//  Created by AI on 8/3/19.
+//  Created by AI on 5/4/19.
 //  Copyright © 2019 AI. All rights reserved.
 //
 
 import Foundation
 import UIKit
 import GooglePlaces
+import SwiftyJSON
+import Alamofire
 
 class MerchantListHeader: UICollectionReusableView {
+    
+    var promotingMerchant: Merchant? {
+        
+        didSet{
+            popularEventNameLabel.text = promotingMerchant?.title
+            popularEventAddressLabel.text = promotingMerchant?.address
+        }
+    }
     
     let headerColorImageView: UIImageView = {
         let iv = UIImageView()
@@ -43,7 +53,11 @@ class MerchantListHeader: UICollectionReusableView {
     }()
     
     @objc func tapCategory() {
-        print("tap tap")
+
+    }
+    
+    @objc func onDoneButtonTapped() {
+        
     }
     
     let questionLabel: UILabel = {
@@ -63,12 +77,12 @@ class MerchantListHeader: UICollectionReusableView {
     
     let popularLabel: UILabel = {
         let label = UILabel()
-        label.text = "Popular in Brisbane"
+        label.text = "Popular Near You"
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textColor = .white
         return label
     }()
-
+    
     let popularEventImageView: UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = UIColor.groupTableViewBackground
@@ -78,14 +92,14 @@ class MerchantListHeader: UICollectionReusableView {
     
     let popularEventNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Nom Nom Korean Eatery"
+        label.text = "Merchant:"
         label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
     
     let popularEventAddressLabel: UILabel = {
         let label = UILabel()
-        label.text = "4/6 Warner St, Fortitude Valley QLD 4006"
+        label.text = "Address:"
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .lightGray
         return label

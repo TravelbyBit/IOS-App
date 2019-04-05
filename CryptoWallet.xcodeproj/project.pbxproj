@@ -16,16 +16,15 @@
 		0129B77E2231E77800DE15E3 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129B77D2231E77800DE15E3 /* MainTabBarController.swift */; };
 		0129B7842231EA5800DE15E3 /* MerchantListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129B7832231EA5800DE15E3 /* MerchantListCell.swift */; };
 		0129B7862231EE0D00DE15E3 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129B7852231EE0D00DE15E3 /* extensions.swift */; };
-		0129B7882231EE6B00DE15E3 /* WalletController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129B7872231EE6B00DE15E3 /* WalletController.swift */; };
 		0129B78A2231EE7200DE15E3 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129B7892231EE7200DE15E3 /* SettingsController.swift */; };
-		0129B78D2231F2E400DE15E3 /* MerchantListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129B78C2231F2E400DE15E3 /* MerchantListHeader.swift */; };
 		0166A164223E41EC00A89AAC /* ModelArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0166A163223E41EC00A89AAC /* ModelArray.swift */; };
-		0166A1A5224493BC00A89AAC /* InvoiceAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0166A1A4224493BC00A89AAC /* InvoiceAlertView.swift */; };
-		0166A1AC2248E9BB00A89AAC /* Invoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0166A1AB2248E9BB00A89AAC /* Invoice.swift */; };
 		0166A1B3224E229900A89AAC /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0166A1B2224E229900A89AAC /* API.swift */; };
 		019F1ED42234B66600C6E098 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F1ED32234B66600C6E098 /* MapViewController.swift */; };
 		019F1ED62234C07C00C6E098 /* Merchant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F1ED52234C07C00C6E098 /* Merchant.swift */; };
 		019F1EFF2237582300C6E098 /* MerchantDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F1EFE2237582300C6E098 /* MerchantDetailController.swift */; };
+		01AAF84B225747F60077A43E /* AlamofireUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AAF84A225747F60077A43E /* AlamofireUtils.swift */; };
+		01AAF851225754160077A43E /* MerchantListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AAF850225754160077A43E /* MerchantListHeader.swift */; };
+		01AAF853225766190077A43E /* PromotionDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AAF852225766190077A43E /* PromotionDetailController.swift */; };
 		7430290538E77D5061B10DDE /* Pods_CryptoWallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60B80272C6F56E92116598A5 /* Pods_CryptoWallet.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,16 +41,15 @@
 		0129B77D2231E77800DE15E3 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		0129B7832231EA5800DE15E3 /* MerchantListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantListCell.swift; sourceTree = "<group>"; };
 		0129B7852231EE0D00DE15E3 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
-		0129B7872231EE6B00DE15E3 /* WalletController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletController.swift; sourceTree = "<group>"; };
 		0129B7892231EE7200DE15E3 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
-		0129B78C2231F2E400DE15E3 /* MerchantListHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantListHeader.swift; sourceTree = "<group>"; };
 		0166A163223E41EC00A89AAC /* ModelArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelArray.swift; sourceTree = "<group>"; };
-		0166A1A4224493BC00A89AAC /* InvoiceAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceAlertView.swift; sourceTree = "<group>"; };
-		0166A1AB2248E9BB00A89AAC /* Invoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invoice.swift; sourceTree = "<group>"; };
 		0166A1B2224E229900A89AAC /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		019F1ED32234B66600C6E098 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		019F1ED52234C07C00C6E098 /* Merchant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Merchant.swift; sourceTree = "<group>"; };
 		019F1EFE2237582300C6E098 /* MerchantDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantDetailController.swift; sourceTree = "<group>"; };
+		01AAF84A225747F60077A43E /* AlamofireUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireUtils.swift; sourceTree = "<group>"; };
+		01AAF850225754160077A43E /* MerchantListHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantListHeader.swift; sourceTree = "<group>"; };
+		01AAF852225766190077A43E /* PromotionDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionDetailController.swift; sourceTree = "<group>"; };
 		5B5A80DE3F9A1ED3F3ADE7A4 /* Pods-CryptoWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoWallet.release.xcconfig"; path = "Target Support Files/Pods-CryptoWallet/Pods-CryptoWallet.release.xcconfig"; sourceTree = "<group>"; };
 		60B80272C6F56E92116598A5 /* Pods_CryptoWallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoWallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8B04409D7D18496BD547B47 /* Pods-CryptoWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoWallet.debug.xcconfig"; path = "Target Support Files/Pods-CryptoWallet/Pods-CryptoWallet.debug.xcconfig"; sourceTree = "<group>"; };
@@ -102,6 +100,7 @@
 				0115AB4D2252F0CF002FFCA1 /* GoogleService-Info.plist */,
 				0166A1B2224E229900A89AAC /* API.swift */,
 				0129B7852231EE0D00DE15E3 /* extensions.swift */,
+				01AAF84A225747F60077A43E /* AlamofireUtils.swift */,
 			);
 			path = CryptoWallet;
 			sourceTree = "<group>";
@@ -110,37 +109,19 @@
 			isa = PBXGroup;
 			children = (
 				019F1ED32234B66600C6E098 /* MapViewController.swift */,
-				0166A162223B4A6D00A89AAC /* MerchantCollectionViewControllers */,
-				0166A1A6224493C700A89AAC /* WalletController */,
+				0129B76D2231E72600DE15E3 /* MerchantListController.swift */,
+				01AAF850225754160077A43E /* MerchantListHeader.swift */,
+				0129B7832231EA5800DE15E3 /* MerchantListCell.swift */,
+				019F1EFE2237582300C6E098 /* MerchantDetailController.swift */,
+				01AAF852225766190077A43E /* PromotionDetailController.swift */,
 				0129B7892231EE7200DE15E3 /* SettingsController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		0166A162223B4A6D00A89AAC /* MerchantCollectionViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				0129B76D2231E72600DE15E3 /* MerchantListController.swift */,
-				0129B7832231EA5800DE15E3 /* MerchantListCell.swift */,
-				0129B78C2231F2E400DE15E3 /* MerchantListHeader.swift */,
-				019F1EFE2237582300C6E098 /* MerchantDetailController.swift */,
-			);
-			path = MerchantCollectionViewControllers;
-			sourceTree = "<group>";
-		};
-		0166A1A6224493C700A89AAC /* WalletController */ = {
-			isa = PBXGroup;
-			children = (
-				0129B7872231EE6B00DE15E3 /* WalletController.swift */,
-				0166A1A4224493BC00A89AAC /* InvoiceAlertView.swift */,
-			);
-			path = WalletController;
-			sourceTree = "<group>";
-		};
 		019F1ED722367A5100C6E098 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0166A1AB2248E9BB00A89AAC /* Invoice.swift */,
 				019F1ED52234C07C00C6E098 /* Merchant.swift */,
 				0166A163223E41EC00A89AAC /* ModelArray.swift */,
 			);
@@ -323,17 +304,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0129B7882231EE6B00DE15E3 /* WalletController.swift in Sources */,
 				0129B7862231EE0D00DE15E3 /* extensions.swift in Sources */,
 				019F1EFF2237582300C6E098 /* MerchantDetailController.swift in Sources */,
-				0129B78D2231F2E400DE15E3 /* MerchantListHeader.swift in Sources */,
+				01AAF84B225747F60077A43E /* AlamofireUtils.swift in Sources */,
 				0129B76E2231E72600DE15E3 /* MerchantListController.swift in Sources */,
 				019F1ED62234C07C00C6E098 /* Merchant.swift in Sources */,
 				0129B78A2231EE7200DE15E3 /* SettingsController.swift in Sources */,
-				0166A1AC2248E9BB00A89AAC /* Invoice.swift in Sources */,
 				0166A164223E41EC00A89AAC /* ModelArray.swift in Sources */,
+				01AAF851225754160077A43E /* MerchantListHeader.swift in Sources */,
+				01AAF853225766190077A43E /* PromotionDetailController.swift in Sources */,
 				0129B76C2231E72600DE15E3 /* AppDelegate.swift in Sources */,
-				0166A1A5224493BC00A89AAC /* InvoiceAlertView.swift in Sources */,
 				0129B77E2231E77800DE15E3 /* MainTabBarController.swift in Sources */,
 				019F1ED42234B66600C6E098 /* MapViewController.swift in Sources */,
 				0166A1B3224E229900A89AAC /* API.swift in Sources */,

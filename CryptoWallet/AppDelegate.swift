@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import GooglePlaces
 import UserNotifications
 import Firebase
 
@@ -23,7 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         
         window = UIWindow()
         window?.rootViewController = MainTabBarController()
-        GMSPlacesClient.provideAPIKey("AIzaSyCYuo4qMYqXcnM8osU4CTGw6zS-VJsJTEE")
 
         attemptRegisterForNotificationsWithDeviceToken(application: application)
         
@@ -84,11 +82,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         {
             print("user tapped the notification bar when the app is in background")
         }
-        
-        /* Change root view controller to a specific viewcontroller */
-        // let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        // let vc = storyboard.instantiateViewController(withIdentifier: "ViewControllerStoryboardID") as? ViewController
-        // self.window?.rootViewController = vc
+
+        self.window?.rootViewController = MainTabBarController()
         
         completionHandler()
     }

@@ -9,5 +9,5 @@
 
 struct API {
     static var merchantAPI = "https://travelbybit.github.io/merchant_api/merchants.json"
-    static var invoiceAPI = "http://www.json-generator.com/api/json/get/ceghyFVFnS?indent=2"
+    static var promotionAPI = "https://travelbybit.github.io/merchant_api/promotions.json"
 }

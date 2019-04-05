@@ -114,37 +114,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     fileprivate func loadInitialData()  {
-    
         SwiftSpinner.show("Fetching Merchants", animated: true)
         
-        Alamofire.request(apiURL)
-            .validate()
-            .responseJSON { response in
-                
-                guard response.result.isSuccess else {
-                    print("Error while fetching api")
-                    return
-                }
-                
-                if((response.result.value) != nil) {
-                    let swiftyJsonVar = JSON(response.result.value!)
-                    let count = swiftyJsonVar.count
-    
-                    for i in 0...count-1 {
-                        let merchant = swiftyJsonVar[i]
-                        let merchantDictionary = merchant.dictionaryObject
-                        let merchantModel = Merchant(json: merchantDictionary!, userLocation: self.locationManager.location?.coordinate)
-                        ModelArray.sharedInstance.collection.append(merchantModel!)
-                    }
-                    self.filteredArray = ModelArray.sharedInstance.collection
-                    self.refreshMap()
-                    SwiftSpinner.hide()
-                }
+        Alamofire.Request.fetchMerchants(api: apiURL) { (merchants) in
+            ModelArray.sharedInstance.collection = merchants
+            self.filteredArray = merchants
+            self.refreshMap()
+            SwiftSpinner.hide()
         }
     }
     
 }
-
 
 extension MapViewController: MKMapViewDelegate {
     // MAPVIEW UTILS
