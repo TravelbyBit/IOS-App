@@ -160,31 +160,6 @@ class MerchantDetailController: UIViewController {
 }
 
 extension MerchantDetailController {
-    //DATE FORMAT
-    func formatToString(str: String) -> String {
-        let dateFormatterGet = DateFormatter()
-        dateFormatterGet.dateFormat = "dd-MM-yyyy HH:mm"
-        
-        let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = "MMM d, h:mm a"
-        
-        let date = dateFormatterGet.date(from: str)
-        return dateFormatterPrint.string(from: date!)
-    }
-    
-    func formatToDate(str: String) -> Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
-        if let formattedDate = dateFormatter.date(from: str) {
-            return formattedDate
-        } else {
-            return Date()
-        }
-    }
-}
-
-extension MerchantDetailController {
-    
     //GOOGLE MAPS
     fileprivate func openGoogleMaps() {
         if UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!) {

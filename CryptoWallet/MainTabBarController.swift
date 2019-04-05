@@ -22,11 +22,10 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         
         let mapNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "maps_icon"), selectedImage: #imageLiteral(resourceName: "maps_icon").withRenderingMode(.alwaysOriginal), rootViewController: MapViewController(), name: "Map")
         let merchantNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "search_logo"), selectedImage: #imageLiteral(resourceName: "search_logo"), rootViewController: MerchantListController(collectionViewLayout: UICollectionViewFlowLayout()), name: "Merchants")
-        let walletNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "wallet_unselected"), selectedImage: #imageLiteral(resourceName: "wallet_selected"), rootViewController: WalletController(), name: "Wallet")
         let settingsNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "settings_logo"), selectedImage: #imageLiteral(resourceName: "settings_logo"), rootViewController: SettingsController(), name: "Settings")
         
         tabBar.tintColor = .black
-        viewControllers = [mapNavController, merchantNavController, walletNavController, settingsNavController]
+        viewControllers = [mapNavController, merchantNavController, settingsNavController]
         
     }
     

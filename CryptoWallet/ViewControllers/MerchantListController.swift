@@ -3,35 +3,25 @@
 //  CryptoWallet
 
 import UIKit
-import SwiftyJSON
-import Alamofire
 import MapKit
 import CoreLocation
 import GooglePlaces
+import Alamofire
+import SwiftyJSON
 
 class MerchantListController: UICollectionViewController, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate {
 
     fileprivate let cellId = "cellId"
     fileprivate let headerId = "headerId"
-    fileprivate let apiURL =  API.merchantAPI
     fileprivate let padding: CGFloat = 16
     fileprivate let headerHeight: CGFloat = 425
-    var filteredMerchants = [Merchant]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkUsersLocationServicesAuthorization()
         setUpHUD()
         configureCollectionView()
-        filteredMerchants = ModelArray.sharedInstance.collection
-    }
-
-    func checkUsersLocationServicesAuthorization() {
-        if CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            ModelArray.sharedInstance.collection.sort(by: { $0.distance! < $1.distance! })
-        } else {
-            presentAlert()
-        }
+        fetchHeaderDetails()
+        checkUsersLocationServicesAuthorization()
     }
     
     fileprivate func setUpHUD() {
@@ -42,6 +32,12 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
         //scrollToTop Button
         self.view.addSubview(scrollToTopButton)
         scrollToTopButton.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 15, paddingRight: 15, width: 40, height: 40)
+    }
+    
+    func checkUsersLocationServicesAuthorization() {
+        if CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            ModelArray.sharedInstance.collection.sort(by: { $0.distance! < $1.distance! })
+        }
     }
     
     fileprivate func configureCollectionView() {
@@ -62,13 +58,13 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
 
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filteredMerchants.count
+        return ModelArray.sharedInstance.collection.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MerchantListCell
-        let indexData = filteredMerchants[indexPath.row]
+        let indexData = ModelArray.sharedInstance.collection[indexPath.row]
         cell.data = indexData
         
         return cell
@@ -84,29 +80,27 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
         return CGSize(width: referenceWidth, height: 80)
     }
     
-    var header: MerchantListHeader?
+    var promotingMerchant: Merchant?
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! MerchantListHeader
-        self.header = header
-
         let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(tapDetected))
         header.addGestureRecognizer(tapGestureRecognizer)
-        
+        header.promotingMerchant = promotingMerchant
+
         return header
     }
     
     @objc func tapDetected() {
         //temporary promotion
-        let merchantDetailController = MerchantDetailController()
-        merchantDetailController.selectedMerchant = Merchant(json: ["merchant": "Nom Nom Korean Eatery", "location": "4/6 Warner St, Fortitude Valley QLD 4006", "category": "n/a", "latitude": "0", "longitude": "0"], userLocation: CLLocationCoordinate2D())
-        merchantDetailController.merchantImageView.image = #imageLiteral(resourceName: "bibimbap")
-        self.navigationController?.pushViewController(merchantDetailController, animated: true)
+        let promotionDetailController = PromotionDetailController()
+        promotionDetailController.selectedMerchant = promotingMerchant
+        promotionDetailController.merchantImageView.image = #imageLiteral(resourceName: "bibimbap")
+        self.navigationController?.pushViewController(promotionDetailController, animated: true)
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let indexData = filteredMerchants[indexPath.row]
+        let indexData = ModelArray.sharedInstance.collection[indexPath.row]
         let vc = MerchantDetailController()
         vc.selectedMerchant = indexData
         self.navigationController?.pushViewController(vc, animated: true)
@@ -156,27 +150,11 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
         scrollViewDidScroll(collectionView)
     }
     
-}
-
-extension MerchantListController {
-    
-    fileprivate func presentAlert() {
-        // Disable location features
-        let alert = UIAlertController(title: "Allow Location Access", message: "Please turn on Location Services in your device settings.", preferredStyle: UIAlertController.Style.alert)
-        
-        // Button to Open Settings
-        alert.addAction(UIAlertAction(title: "Not now", style: UIAlertAction.Style.default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Settings", style: UIAlertAction.Style.default, handler: { action in
-            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
-                return
-            }
-            if UIApplication.shared.canOpenURL(settingsUrl) {
-                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
-                    print("Settings opened: \(success)")
-                })
-            }
-        }))
-        self.present(alert, animated: true, completion: nil)
+    fileprivate func fetchHeaderDetails()  {
+        Alamofire.Request.fetchMerchants(api: API.promotionAPI) { (merchants) in
+            self.promotingMerchant = merchants[0]
+            self.collectionView.reloadData()
+        }
     }
     
 }
