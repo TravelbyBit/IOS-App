@@ -10,12 +10,13 @@ import UIKit
 import MapKit
 import SwiftyJSON
 import Alamofire
+import SwiftSpinner
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBarDelegate {
+class MapViewController: UIViewController, CLLocationManagerDelegate {
     
     var locationManager = CLLocationManager()
     var selectedAnnotation: Merchant?
-    let apiURL = "https://travelbybit.github.io/merchant_api/merchants.json"
+    let apiURL = API.merchantAPI
     
     let mapView: MKMapView = {
         let map = MKMapView()
@@ -66,28 +67,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
             break
         }
     }
-    
-    lazy var searchBar: UISearchBar = {
-        let sb = UISearchBar()
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.rgb(red: 230, green: 230, blue: 230)
-        sb.placeholder = "Search Near Your Area"
-        sb.returnKeyType = .done
-        sb.delegate = self
-        
-        let toolBar = UIToolbar()
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.doneClicked))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-        toolBar.setItems([spaceButton, doneButton], animated: false)
-        toolBar.sizeToFit()
-        sb.inputAccessoryView = toolBar
-        
-        return sb
-    }()
-    
-    @objc func doneClicked() {
-        searchBar.resignFirstResponder()
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMap()
@@ -109,9 +89,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         
         view.addSubview(zoomButton)
         zoomButton.anchor(top: nil, left: nil, bottom: segmentedControl.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 15, paddingRight: 20, width: 30, height: 30)
-        
-        //view.addSubview(searchBar)
-        //searchBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
     }
     
     fileprivate func setupMap() {
@@ -138,6 +115,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     
     fileprivate func loadInitialData()  {
     
+        SwiftSpinner.show("Fetching Merchants", animated: true)
+        
         Alamofire.request(apiURL)
             .validate()
             .responseJSON { response in
@@ -152,16 +131,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
                     let count = swiftyJsonVar.count
     
                     for i in 0...count-1 {
-                        
                         let merchant = swiftyJsonVar[i]
                         let merchantDictionary = merchant.dictionaryObject
-                        let merchantModel = Merchant(json: merchantDictionary!, userLocation: self.locationManager.location?.coordinate ?? CLLocationCoordinate2D(latitude: 0, longitude: 0))
+                        let merchantModel = Merchant(json: merchantDictionary!, userLocation: self.locationManager.location?.coordinate)
                         ModelArray.sharedInstance.collection.append(merchantModel!)
                     }
-                    
                     self.filteredArray = ModelArray.sharedInstance.collection
                     self.refreshMap()
-                    
+                    SwiftSpinner.hide()
                 }
         }
     }
@@ -170,7 +147,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
 
 
 extension MapViewController: MKMapViewDelegate {
-
+    // MAPVIEW UTILS
+    
     // 1
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         // 2
@@ -203,36 +181,14 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     @objc func detailButtonTapped() {
-        //let merchantDetailController = MerchantDetailController()
-        //merchantDetailController.selectedMerchant = selectedAnnotation
-        //self.navigationController?.pushViewController(merchantDetailController, animated: true)
-        openGoogleMaps()
+        let merchantDetailController = MerchantDetailController()
+        merchantDetailController.selectedMerchant = selectedAnnotation
+        self.navigationController?.pushViewController(merchantDetailController, animated: true)
     }
     
     fileprivate func refreshMap() {
         self.mapView.removeAnnotations(mapView.annotations)
         self.mapView.addAnnotations(self.filteredArray)
-    }
-    
-    @objc func openGoogleMaps() {
-        if UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!) {
-            
-            UIApplication.shared.open(URL(string:  "comgooglemaps://?saddr=&daddr=\(self.selectedAnnotation!.coordinate.latitude),\(self.selectedAnnotation!.coordinate.longitude)&directionsmode=driving")!, options: [:])
-            
-            
-        } else {
-            print("Opening in Apple Map")
-            
-            let coordinate = CLLocationCoordinate2DMake(self.selectedAnnotation!.coordinate.latitude, self.selectedAnnotation!.coordinate.longitude)
-            let region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.02))
-            let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
-            let mapItem = MKMapItem(placemark: placemark)
-            let options = [
-                MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: region.center),
-                MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: region.span)]
-            mapItem.name = self.selectedAnnotation?.title
-            mapItem.openInMaps(launchOptions: options)
-        }
     }
   
 }

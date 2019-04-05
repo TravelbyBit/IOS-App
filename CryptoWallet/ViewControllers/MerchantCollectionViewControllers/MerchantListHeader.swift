@@ -8,63 +8,132 @@
 
 import Foundation
 import UIKit
+import GooglePlaces
 
-class MerchantListHeader: UICollectionViewCell {
+class MerchantListHeader: UICollectionReusableView {
     
-    var merchantNameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Select Merchant"
-        label.font = UIFont.boldSystemFont(ofSize: 24)
-        return label
+    let headerColorImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "pastel")
+        iv.contentMode = .scaleAspectFill
+        return iv
     }()
     
-    var merchantHours: UILabel = {
+    let whatsHappeningLabel: UILabel = {
         let label = UILabel()
-        label.text = "Hours: COMING SOON"
-        label.font = UIFont.systemFont(ofSize: 10)
-        return label
-    }()
-    
-    var acceptedCoinsLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Accepted Coins: COMING SOON"
-        label.textColor = .white
+        label.text = "Which"
         label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.textColor = .white
         return label
     }()
     
-    var backgroundImageView: UIImageView = {
+    let categoryButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Merchant", for: .normal)
+        let attribute : [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 45),
+            NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue]
+        let attributeString = NSMutableAttributedString(string: "Merchant",
+                                                        attributes: attribute)
+        button.titleLabel?.textAlignment = .left
+        button.setAttributedTitle(attributeString, for: .normal)
+        button.addTarget(self, action: #selector(tapCategory), for: .touchUpInside)
+        button.titleLabel?.textColor = .white
+        return button
+    }()
+    
+    @objc func tapCategory() {
+        print("tap tap")
+    }
+    
+    let questionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "will accept my cryptocurrency ?"
+        label.textColor = .white
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    
+    let popularEventView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 5
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    let popularLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Popular in Brisbane"
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.textColor = .white
+        return label
+    }()
+
+    let popularEventImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "sample_photo")
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
+        iv.backgroundColor = UIColor.groupTableViewBackground
+        iv.contentMode = .scaleAspectFit
         return iv
     }()
     
-    var arrowImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "arrow")
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        return iv
+    let popularEventNameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Nom Nom Korean Eatery"
+        label.font = UIFont.systemFont(ofSize: 16)
+        return label
     }()
-
+    
+    let popularEventAddressLabel: UILabel = {
+        let label = UILabel()
+        label.text = "4/6 Warner St, Fortitude Valley QLD 4006"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .lightGray
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor.white
+        setupHUD()
+    }
+    
+    func setupHUD() {
+        addSubview(headerColorImageView)
+        headerColorImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 275)
         
-        addSubview(backgroundImageView)
-        addSubview(merchantNameLabel)
-        addSubview(merchantHours)
-        addSubview(acceptedCoinsLabel)
-        //addSubview(arrowImageView)
+        addSubview(whatsHappeningLabel)
+        whatsHappeningLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 70, paddingLeft: 15, paddingBottom: 0, paddingRight: 0, width: 50, height: 35)
         
-        merchantNameLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 4, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        merchantHours.anchor(top: merchantNameLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        acceptedCoinsLabel.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 4, paddingBottom: 4, paddingRight: 0, width: 0, height: 0)
-        backgroundImageView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        //arrowImageView.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 10, width: 30, height: 30)
-        //arrowImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        addSubview(categoryButton)
+        categoryButton.anchor(top: topAnchor, left: whatsHappeningLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 45, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 200, height: 70)
+        
+        addSubview(questionLabel)
+        questionLabel.anchor(top: whatsHappeningLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 15, paddingBottom: 0, paddingRight: 0, width: 0, height: 30)
+        
+        addSubview(popularEventView)
+        popularEventView.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 15, paddingBottom: 10, paddingRight: 15, width: 0, height: 225)
+        setupPopularEventView()
+        
+        addSubview(popularLabel)
+        popularLabel.anchor(top: nil, left: leftAnchor, bottom: popularEventView.topAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: 10, paddingRight: 20, width: 0, height: 20)
+    }
+    
+    fileprivate func setupPopularEventView() {
+        popularEventView.layer.borderColor = UIColor.lightGray.cgColor
+        popularEventView.layer.borderWidth = 0.5
+        
+        popularEventView.addSubview(popularEventImageView)
+        popularEventImageView.anchor(top: popularEventView.topAnchor, left: popularEventView.leftAnchor, bottom: nil, right: popularEventView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 175)
+        popularEventImageView.contentMode = .scaleAspectFill
+        popularEventImageView.clipsToBounds = true
+        DispatchQueue.main.async {
+            self.popularEventImageView.image = #imageLiteral(resourceName: "bibimbap")
+        }
+        
+        popularEventView.addSubview(popularEventNameLabel)
+        popularEventNameLabel.anchor(top: popularEventImageView.bottomAnchor, left: popularEventView.leftAnchor, bottom: nil, right: popularEventView.rightAnchor, paddingTop: 5, paddingLeft: 15, paddingBottom: 0, paddingRight: 15, width: 0, height: 20)
+        
+        popularEventView.addSubview(popularEventAddressLabel)
+        popularEventAddressLabel.anchor(top: popularEventNameLabel.bottomAnchor, left: popularEventView.leftAnchor, bottom: nil, right: popularEventView.rightAnchor, paddingTop: 0, paddingLeft: 15, paddingBottom: 0, paddingRight: 15, width: 0, height: 20)
     }
     
     required init?(coder aDecoder: NSCoder) {

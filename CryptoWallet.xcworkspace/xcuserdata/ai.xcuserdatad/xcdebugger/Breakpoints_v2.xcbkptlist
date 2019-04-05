@@ -58,7 +58,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CryptoWallet/ViewControllers/MerchantDetailController.swift"
-            timestampString = "574856712.107879"
+            timestampString = "575642831.759753"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "72"
@@ -74,59 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CryptoWallet/ViewControllers/MerchantCollectionViewControllers/MerchantListController.swift"
-            timestampString = "574856712.107993"
+            timestampString = "576128208.337413"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "searchBar(_:textDidChange:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CryptoWallet/ViewControllers/MerchantCollectionViewControllers/MerchantListController.swift"
-            timestampString = "574856712.1081001"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
-            landmarkName = "searchBar(_:textDidChange:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CryptoWallet/ViewControllers/MerchantCollectionViewControllers/MerchantListController.swift"
-            timestampString = "574856712.108201"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "searchBar(_:textDidChange:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CryptoWallet/ViewControllers/MerchantCollectionViewControllers/MerchantListController.swift"
-            timestampString = "574856712.10829"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -138,12 +90,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CryptoWallet/ViewControllers/MerchantCollectionViewControllers/MerchantListController.swift"
-            timestampString = "574856712.108421"
+            timestampString = "576128208.337922"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
-            landmarkName = "viewWillAppear(_:)"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "checkUsersLocationServicesAuthorization()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CryptoWallet.MerchantListController.checkUsersLocationServicesAuthorization() -&gt; ()"
+                  moduleName = "CryptoWallet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ai/Desktop/iOS-App/CryptoWallet/ViewControllers/MerchantCollectionViewControllers/MerchantListController.swift"
+                  timestampString = "575872309.071245"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "436">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (CryptoWallet.Merchant, CryptoWallet.Merchant) -&gt; Swift.Bool in CryptoWallet.MerchantListController.checkUsersLocationServicesAuthorization() -&gt; ()"
+                  moduleName = "CryptoWallet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ai/Desktop/iOS-App/CryptoWallet/ViewControllers/MerchantCollectionViewControllers/MerchantListController.swift"
+                  timestampString = "575872309.073179"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CryptoWallet/ViewControllers/MerchantCollectionViewControllers/MerchantListController.swift"
+            timestampString = "576128208.338275"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "checkUsersLocationServicesAuthorization()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -154,12 +154,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CryptoWallet/ViewControllers/MerchantCollectionViewControllers/MerchantListController.swift"
-            timestampString = "574856712.108501"
+            timestampString = "576128208.3386199"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "viewWillDisappear(_:)"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "checkUsersLocationServicesAuthorization()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CryptoWallet/ViewControllers/MerchantCollectionViewControllers/MerchantListHeader.swift"
+            timestampString = "576128208.3389601"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
+            landmarkName = "setupHUD()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CryptoWallet/ViewControllers/MerchantCollectionViewControllers/MerchantListHeader.swift"
+            timestampString = "576128208.3390239"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
+            landmarkName = "setupHUD()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
