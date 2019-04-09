@@ -36,7 +36,7 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
     
     func checkUsersLocationServicesAuthorization() {
         if CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            ModelArray.sharedInstance.collection.sort(by: { $0.distance! < $1.distance! })
+            ModelCollection.sharedInstance.collection.sort(by: { $0.distance! < $1.distance! })
         }
     }
     
@@ -58,13 +58,13 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
 
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ModelArray.sharedInstance.collection.count
+        return ModelCollection.sharedInstance.collection.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MerchantListCell
-        let indexData = ModelArray.sharedInstance.collection[indexPath.row]
+        let indexData = ModelCollection.sharedInstance.collection[indexPath.row]
         cell.data = indexData
         
         return cell
@@ -100,7 +100,7 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let indexData = ModelArray.sharedInstance.collection[indexPath.row]
+        let indexData = ModelCollection.sharedInstance.collection[indexPath.row]
         let vc = MerchantDetailController()
         vc.selectedMerchant = indexData
         self.navigationController?.pushViewController(vc, animated: true)

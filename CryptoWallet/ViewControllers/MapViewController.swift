@@ -52,16 +52,16 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         
         switch sender.selectedSegmentIndex{
         case 0:
-            filteredArray = ModelArray.sharedInstance.collection
+            filteredArray = ModelCollection.sharedInstance.collection
             refreshMap()
         case 1:
-            filteredArray = ModelArray.sharedInstance.collection.filter({$0.category == "Dining"})
+            filteredArray = ModelCollection.sharedInstance.collection.filter({$0.category == "Dining"})
             refreshMap()
         case 2:
-            filteredArray = ModelArray.sharedInstance.collection.filter({$0.category == "Retail"})
+            filteredArray = ModelCollection.sharedInstance.collection.filter({$0.category == "Retail"})
             refreshMap()
         case 3:
-            filteredArray = ModelArray.sharedInstance.collection.filter({$0.category != "Dining" && $0.category != "Retail"})
+            filteredArray = ModelCollection.sharedInstance.collection.filter({$0.category != "Dining" && $0.category != "Retail"})
             refreshMap()
         default:
             break
@@ -115,12 +115,21 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     
     fileprivate func loadInitialData()  {
         SwiftSpinner.show("Fetching Merchants", animated: true)
-        
         Alamofire.Request.fetchMerchants(api: apiURL) { (merchants) in
-            ModelArray.sharedInstance.collection = merchants
+            self.assignDistanceFromUser(merchants: merchants)
+            ModelCollection.sharedInstance.collection = merchants
             self.filteredArray = merchants
             self.refreshMap()
             SwiftSpinner.hide()
+        }
+    }
+    
+    fileprivate func assignDistanceFromUser(merchants: [Merchant]) {
+        if CLLocationManager.locationServicesEnabled() {
+            for merchant in merchants {
+                let distanceFromCurrentLocation = CLLocation(latitude: merchant.coordinate.latitude, longitude: merchant.coordinate.longitude).distance(from: CLLocation(latitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!))
+                merchant.distance = distanceFromCurrentLocation
+            }
         }
     }
     

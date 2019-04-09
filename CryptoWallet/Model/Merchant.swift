@@ -34,9 +34,9 @@ class Merchant: NSObject, MKAnnotation, CLLocationManagerDelegate {
         self.coordinate = CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!)
         
         super.init()
-        setupLocationManager()
+        //setupLocationManager()
     }
-    
+    /*
     var locationManager = CLLocationManager()
     fileprivate func setupLocationManager() {
         self.locationManager.requestWhenInUseAuthorization()
@@ -44,7 +44,7 @@ class Merchant: NSObject, MKAnnotation, CLLocationManagerDelegate {
             let distanceFromCurrentLocation = CLLocation(latitude: self.coordinate.latitude, longitude: self.coordinate.longitude).distance(from: CLLocation(latitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!))
             self.distance = distanceFromCurrentLocation
         }
-    }
+    }*/
 
 }
 
