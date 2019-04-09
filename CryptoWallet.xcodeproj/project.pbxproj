@@ -17,7 +17,7 @@
 		0129B7842231EA5800DE15E3 /* MerchantListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129B7832231EA5800DE15E3 /* MerchantListCell.swift */; };
 		0129B7862231EE0D00DE15E3 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129B7852231EE0D00DE15E3 /* extensions.swift */; };
 		0129B78A2231EE7200DE15E3 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0129B7892231EE7200DE15E3 /* SettingsController.swift */; };
-		0166A164223E41EC00A89AAC /* ModelArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0166A163223E41EC00A89AAC /* ModelArray.swift */; };
+		0166A164223E41EC00A89AAC /* ModelCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0166A163223E41EC00A89AAC /* ModelCollection.swift */; };
 		0166A1B3224E229900A89AAC /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0166A1B2224E229900A89AAC /* API.swift */; };
 		019F1ED42234B66600C6E098 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F1ED32234B66600C6E098 /* MapViewController.swift */; };
 		019F1ED62234C07C00C6E098 /* Merchant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F1ED52234C07C00C6E098 /* Merchant.swift */; };
@@ -42,7 +42,7 @@
 		0129B7832231EA5800DE15E3 /* MerchantListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantListCell.swift; sourceTree = "<group>"; };
 		0129B7852231EE0D00DE15E3 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		0129B7892231EE7200DE15E3 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
-		0166A163223E41EC00A89AAC /* ModelArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelArray.swift; sourceTree = "<group>"; };
+		0166A163223E41EC00A89AAC /* ModelCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCollection.swift; sourceTree = "<group>"; };
 		0166A1B2224E229900A89AAC /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		019F1ED32234B66600C6E098 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		019F1ED52234C07C00C6E098 /* Merchant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Merchant.swift; sourceTree = "<group>"; };
@@ -123,7 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				019F1ED52234C07C00C6E098 /* Merchant.swift */,
-				0166A163223E41EC00A89AAC /* ModelArray.swift */,
+				0166A163223E41EC00A89AAC /* ModelCollection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -310,7 +310,7 @@
 				0129B76E2231E72600DE15E3 /* MerchantListController.swift in Sources */,
 				019F1ED62234C07C00C6E098 /* Merchant.swift in Sources */,
 				0129B78A2231EE7200DE15E3 /* SettingsController.swift in Sources */,
-				0166A164223E41EC00A89AAC /* ModelArray.swift in Sources */,
+				0166A164223E41EC00A89AAC /* ModelCollection.swift in Sources */,
 				01AAF851225754160077A43E /* MerchantListHeader.swift in Sources */,
 				01AAF853225766190077A43E /* PromotionDetailController.swift in Sources */,
 				0129B76C2231E72600DE15E3 /* AppDelegate.swift in Sources */,

@@ -6,8 +6,8 @@
 //  Copyright © 2019 AI. All rights reserved.
 //
 
-class ModelArray {
+class ModelCollection {
     private init() { }
-    static let sharedInstance = ModelArray()
+    static let sharedInstance = ModelCollection()
     var collection = [Merchant]()
 }
