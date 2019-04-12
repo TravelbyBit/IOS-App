@@ -183,7 +183,8 @@ extension PromotionDetailController {
     fileprivate func openGoogleMaps() {
         if UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!) {
             let address = selectedMerchant?.address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-            let urlString = "comgooglemaps://?saddr=&daddr=" + address! + "&directionsmode=driving&zoom=17"
+            let name = selectedMerchant?.title?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            let urlString = "comgooglemaps://?saddr=&daddr=" + address! + "%20" + name! + "&directionsmode=driving&zoom=17"
             UIApplication.shared.open(URL(string: urlString)!, options: [:])
         } else {
             //opening in apple maps

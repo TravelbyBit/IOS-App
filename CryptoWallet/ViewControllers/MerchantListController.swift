@@ -34,10 +34,21 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
         scrollToTopButton.anchor(top: nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 15, paddingRight: 15, width: 40, height: 40)
     }
     
+    var locationManager = CLLocationManager()
     func checkUsersLocationServicesAuthorization() {
         if CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            ModelCollection.sharedInstance.collection.sort(by: { $0.distance! < $1.distance! })
+            assignDistanceAndSort()
         }
+    }
+    
+    fileprivate func assignDistanceAndSort() {
+        for index in 0...ModelCollection.sharedInstance.collection.count-1 {
+            let merchant = ModelCollection.sharedInstance.collection[index]
+            let distanceFromCurrentLocation = CLLocation(latitude: merchant.coordinate.latitude, longitude: merchant.coordinate.longitude).distance(from: CLLocation(latitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!))
+            merchant.distance = distanceFromCurrentLocation
+            
+        }
+        ModelCollection.sharedInstance.collection.sort(by: { $0.distance! < $1.distance! })
     }
     
     fileprivate func configureCollectionView() {
@@ -147,12 +158,15 @@ class MerchantListController: UICollectionViewController, UICollectionViewDelega
     
     override func viewWillAppear(_ animated: Bool) {
         //fix bug after transition to detail controller
+        //update distance
         scrollViewDidScroll(collectionView)
+        checkUsersLocationServicesAuthorization()
+        self.collectionView.reloadData()
     }
     
     fileprivate func fetchHeaderDetails()  {
         Alamofire.Request.fetchMerchants(api: API.promotionAPI) { (merchants) in
-            self.promotingMerchant = merchants[0]
+            self.promotingMerchant = merchants[0] // should fetch the closest one out of an array ...
             self.collectionView.reloadData()
         }
     }

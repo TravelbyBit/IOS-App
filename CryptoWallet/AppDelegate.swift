@@ -83,7 +83,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
             print("user tapped the notification bar when the app is in background")
         }
 
-        self.window?.rootViewController = MainTabBarController()
+        
+        if let tabBarController = self.window!.rootViewController as? UITabBarController {
+            tabBarController.selectedIndex = 1
+            self.window?.rootViewController = tabBarController
+        }
         
         completionHandler()
     }

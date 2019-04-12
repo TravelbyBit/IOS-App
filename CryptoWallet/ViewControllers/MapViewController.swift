@@ -67,6 +67,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             break
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.navigationController?.isNavigationBarHidden = false
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,7 +111,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                 let viewRegion = MKCoordinateRegion(center: userLocation, latitudinalMeters: 600, longitudinalMeters: 600)
                 mapView.setRegion(viewRegion, animated: false)
             }
-            
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
@@ -116,22 +120,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     fileprivate func loadInitialData()  {
         SwiftSpinner.show("Fetching Merchants", animated: true)
         Alamofire.Request.fetchMerchants(api: apiURL) { (merchants) in
-            self.assignDistanceFromUser(merchants: merchants)
             ModelCollection.sharedInstance.collection = merchants
             self.filteredArray = merchants
             self.refreshMap()
             SwiftSpinner.hide()
         }
     }
-    
-    fileprivate func assignDistanceFromUser(merchants: [Merchant]) {
-        if CLLocationManager.locationServicesEnabled() {
-            for merchant in merchants {
-                let distanceFromCurrentLocation = CLLocation(latitude: merchant.coordinate.latitude, longitude: merchant.coordinate.longitude).distance(from: CLLocation(latitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!))
-                merchant.distance = distanceFromCurrentLocation
-            }
-        }
-    }
+
     
 }
 

@@ -21,6 +21,18 @@ extension UIColor {
     
 }
 
+extension Date {
+    
+    static func dateToString(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd/HH/mm/ss"
+        let dateString = formatter.string(from: date)
+        return dateString
+    }
+    
+}
+
+
 extension Double {
     /// Rounds the double to decimal places value
     func rounded(toPlaces places:Int) -> Double {
